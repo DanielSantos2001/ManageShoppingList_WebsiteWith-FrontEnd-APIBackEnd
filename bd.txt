@@ -1,0 +1,36 @@
+create table utilizadores
+(
+    id       int auto_increment
+        primary key,
+    nome     varchar(50)  null,
+    username varchar(25)  null,
+    email    varchar(50)  null,
+    password varchar(255) null,
+    token    varchar(255) null,
+    constraint utilizadores_pk
+        unique (username)
+);
+
+create table listas
+(
+    id         int auto_increment
+        primary key,
+    nome       varchar(50)          null,
+    utilizador int                  null,
+    fechada    tinyint(1) default 0 null,
+    constraint listas_utilizadores_null_fk
+        foreign key (utilizador) references utilizadores (id)
+);
+
+create table itens
+(
+    id          int auto_increment
+        primary key,
+    nome        varchar(50)          null,
+    quantidade  int                  null,
+    observacoes varchar(255)         null,
+    lista       int                  null,
+    comprado    tinyint(1) default 0 null,
+    constraint itens_listas_null_fk
+        foreign key (lista) references listas (id)
+);

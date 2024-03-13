@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <style type="text/css">
+      body {
+        background-color: rgba(0, 153, 255, 0.4);
+      }
+    </style>
+    <title>Lista de Compras</title>
+  </head>
+  <body class="p-5 m-5">
+    <div class="container">
+      <div class="py-2 w-100 d-inline-flex justify-content-between">
+        <h1>Lista de Compras</h1>
+        <div>
+          <button
+            id="botao-editar"
+            class="btn btn-secondary"
+            style="display: none"
+          >
+            Editar Perfil
+          </button>
+          <button
+            id="logout"
+            class="btn btn-secondary ms-2"
+            style="display: none"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+      <div id="login">
+        <h4>Login</h4>
+        <div class="mb-3">
+          <label for="login-username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="login-username" />
+        </div>
+        <div class="mb-3">
+          <label for="login-password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="login-password" />
+        </div>
+        <input id="submit-login" type="submit" class="btn btn-primary" />
+        <button id="botao-registo" class="btn btn-secondary">Registo</button>
+      </div>
+      <div id="registo" style="display: none">
+        <h4>Registo</h4>
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input id="registo-nome" type="text" class="form-control" id="nome" />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            id="registo-email"
+            type="email"
+            class="form-control"
+            id="email"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            id="registo-username"
+            type="text"
+            class="form-control"
+            id="username"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            id="registo-password"
+            type="password"
+            class="form-control"
+            id="password"
+          />
+        </div>
+        <input id="submit-registo" type="submit" class="btn btn-primary" />
+        <button id="botao-login" class="btn btn-secondary">Login</button>
+      </div>
+      <div id="editar" style="display: none">
+        <div class="py-2 w-100 d-inline-flex justify-content-between">
+          <h4>Editar Perfil</h4>
+          <button onclick="carregarListas();" class="btn btn-info">
+            Voltar
+          </button>
+        </div>
+
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input id="editar-nome" type="text" class="form-control" id="nome" />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            id="editar-email"
+            type="email"
+            class="form-control"
+            id="email"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            id="editar-username"
+            type="text"
+            class="form-control"
+            id="username"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            id="editar-password"
+            type="password"
+            class="form-control"
+            id="password"
+          />
+        </div>
+        <input id="submit-editar" type="submit" class="btn btn-primary" />
+      </div>
+      <div id="listas" style="display: none">
+        <div class="py-2 w-100 d-inline-flex justify-content-between">
+          <h4>Listas</h4>
+          <button
+            data-bs-toggle="modal"
+            data-bs-target="#nova-lista"
+            class="btn btn-success"
+          >
+            Adicionar
+          </button>
+        </div>
+        <div class="card mb-4">
+          <div class="card-header">Listas Ativas</div>
+          <ul id="listas-ativas" class="list-group list-group-flush"></ul>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Listas Antigas</div>
+          <ul id="listas-antigas" class="list-group list-group-flush"></ul>
+        </div>
+      </div>
+      <div id="nova-lista" class="modal fade" style="display: none">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Adicionar Lista</h5>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="lista-nome" class="col-form-label">Nome:</label>
+                <input type="text" class="form-control" id="lista-nome" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button
+                id="submeter-lista"
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="itens" style="display: none">
+        <div class="py-2 w-100 d-inline-flex justify-content-between">
+          <h4 id="titulo-lista">Itens da Lista:</h4>
+          <div>
+            <button onclick="carregarListas();" class="btn btn-info">
+              Voltar
+            </button>
+            <button
+              id="adicionar-item"
+              data-bs-toggle="modal"
+              data-bs-target="#novo-item"
+              class="btn btn-success"
+            >
+              Adicionar
+            </button>
+          </div>
+        </div>
+        <div id="lista-itens" class="d-flex flex-wrap"></div>
+      </div>
+      <div id="novo-item" class="modal fade" style="display: none">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Adicionar Item</h5>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="item-nome" class="col-form-label">Nome:</label>
+                <input type="text" class="form-control" id="item-nome" />
+              </div>
+
+              <div class="mb-3">
+                <label for="item-quantidade" class="col-form-label"
+                  >Quantidade:</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="item-quantidade"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="item-observacoes" class="col-form-label"
+                  >Observações:</label
+                >
+                <textarea class="form-control" id="item-observacoes"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <button
+                id="submeter-item"
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                Adicionar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+    <script src="index.js"></script>
+  </body>
+</html>

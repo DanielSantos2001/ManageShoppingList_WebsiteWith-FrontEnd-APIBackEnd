@@ -1,0 +1,80 @@
+// URL base da API
+@apiurl = http://localhost:8080
+@auth-token = 500e6537fca57f4dd814f465a9b8279c
+
+POST {{apiurl}}/user/registo HTTP/1.1
+Content-Type: application/json
+
+{
+    "nome": "Teste",
+    "username": "teste",
+    "email": "teste@teste.com",
+    "password": "teste"
+}
+
+### Login
+POST {{apiurl}}/user/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "teste",
+    "password": "teste"
+}
+
+### Editar
+PUT {{apiurl}}/user HTTP/1.1
+Content-Type: application/json
+Authorization: {{auth-token}}
+
+{
+    "nome": "Teste2",
+    "username": "teste",
+    "email": "teste@teste.com",
+    "password": "teste2"
+}
+
+
+### Logout
+POST {{apiurl}}/user/logout HTTP/1.1
+Authorization: {{auth-token}}
+
+### Adicionar Lista
+POST {{apiurl}}/listas HTTP/1.1
+Authorization: {{auth-token}}
+Content-Type: application/json
+
+{
+    "nome": "Lista Exemplo"
+}
+
+### Listar listas
+GET {{apiurl}}/listas HTTP/1.1
+Authorization: {{auth-token}}
+
+### Completar Lista
+POST {{apiurl}}/listas/2/fechar HTTP/1.1
+Authorization: {{auth-token}}
+
+### Adicionar Item
+POST {{apiurl}}/itens HTTP/1.1
+Authorization: {{auth-token}}
+Content-Type: application/json
+
+{
+    "nome": "Item teste",
+    "quantidade": 2,
+    "observacoes": "Outra lista",
+    "lista": 2
+}
+
+### Listar itens de lista
+GET {{apiurl}}/listas/2/itens HTTP/1.1
+Authorization: {{auth-token}}
+
+### Marcar item como comprado
+POST {{apiurl}}/itens/9/comprado HTTP/1.1
+Authorization: {{auth-token}}
+
+### Remover Item
+DELETE {{apiurl}}/itens/8 HTTP/1.1
+Authorization: {{auth-token}}
